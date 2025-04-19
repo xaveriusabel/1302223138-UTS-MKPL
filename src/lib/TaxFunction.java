@@ -20,30 +20,31 @@ private static final double TAX_RATE = 0.05;
 	 */
 	
 	
-	public static int calculateTax(int monthlySalary, int otherMonthlyIncome, int numberOfMonthWorking, int deductible, boolean isMarried, int numberOfChildren) {
-		
-		int tax = 0;
-		
-		if (numberOfMonthWorking > 12) {
-			System.err.println("More than 12 month working per year");
-		}
-		
-		if (numberOfChildren > 3) {
-			numberOfChildren = 3;
-		}
-		
-		if (isMarried) {
-			tax = (int) Math.round(0.05 * (((monthlySalary + otherMonthlyIncome) * numberOfMonthWorking) - deductible - (54000000 + 4500000 + (numberOfChildren * 1500000))));
-		}else {
-			tax = (int) Math.round(0.05 * (((monthlySalary + otherMonthlyIncome) * numberOfMonthWorking) - deductible - 54000000));
-		}
-		
-		if (tax < 0) {
-			return 0;
-		}else {
-			return tax;
-		}
-			 
-	}
-	
+	 public static int calculateTax(int monthlySalary, int otherMonthlyIncome, int numberOfMonthWorking,
+                                   int deductible, boolean isSingle, int numberOfChildren) {
+
+        if (numberOfMonthWorking > 12) {
+            System.err.println("More than 12 months working per year");
+            numberOfMonthWorking = 12;
+        }
+
+        numberOfChildren = Math.min(numberOfChildren, MAX_CHILDREN);
+
+        int grossAnnualIncome = (monthlySalary + otherMonthlyIncome) * numberOfMonthWorking;
+        int nonTaxableIncome = BASE_NON_TAXABLE_INCOME;
+
+        if (!isSingle) {
+            nonTaxableIncome += MARRIED_ALLOWANCE + (CHILD_ALLOWANCE * numberOfChildren);
+        }
+
+        int taxableIncome = grossAnnualIncome - deductible - nonTaxableIncome;
+
+        if (taxableIncome <= 0) {
+            return 0;
+        }
+
+        return (int) Math.round(TAX_RATE * taxableIncome);
+    }
 }
+	
+
