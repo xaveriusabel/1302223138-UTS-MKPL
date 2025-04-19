@@ -23,6 +23,19 @@ public class Employee {
 		MALE, FEMALE
 	}
 	
+	public class Child {
+		private String name;
+		private String idNumber;
+	
+		public Child(String name, String idNumber) {
+			this.name = name;
+			this.idNumber = idNumber;
+		}
+	}
+	
+	private List<Child> children = new LinkedList<>();
+	
+
 	private Gender gender;
 	
 	private int monthlySalary;
@@ -85,8 +98,7 @@ public class Employee {
 	
 	
 	public void addChild(String childName, String childIdNumber) {
-		childNames.add(childName);
-		childIdNumbers.add(childIdNumber);
+		children.add(new Child(childName, childIdNumber));
 	}
 	
 	public int getAnnualIncomeTax() {
