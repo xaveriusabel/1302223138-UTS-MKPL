@@ -19,7 +19,11 @@ public class Employee {
 	private int monthWorkingInYear;
 	
 	private boolean isForeigner;
-	private boolean gender; //true = Laki-laki, false = Perempuan
+	public enum Gender {
+		MALE, FEMALE
+	}
+	
+	private Gender gender;
 	
 	private int monthlySalary;
 	private int otherMonthlyIncome;
@@ -41,7 +45,7 @@ public class Employee {
 		this.monthJoined = monthJoined;
 		this.dayJoined = dayJoined;
 		this.isForeigner = isForeigner;
-		this.gender = gender;
+	
 		
 		childNames = new LinkedList<String>();
 		childIdNumbers = new LinkedList<String>();
